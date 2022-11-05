@@ -1,19 +1,18 @@
 #!/bin/bash
 set -o errexit
+SCRIPT_DIR=$(dirname -- "$0")
 
 # shellcheck source=../env/db.env
-source env/db.env
+source ${SCRIPT_DIR}/../env/db.env
 # shellcheck source=../env/elasticsearch.env
-source env/elasticsearch.env
+source ${SCRIPT_DIR}/../env/elasticsearch.env
 # shellcheck source=../env/magento.env
-source env/magento.env
+source ${SCRIPT_DIR}/../env/magento.env
 # shellcheck source=../env/rabbitmq.env
-source env/rabbitmq.env
+source ${SCRIPT_DIR}/../env/rabbitmq.env
 
 DOMAIN=$(gp url 443)
 DOMAIN="${DOMAIN#https://}"
-
-SCRIPT_DIR=$(dirname -- "$0")
 
 ${SCRIPT_DIR}/stop
 
