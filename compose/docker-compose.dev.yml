@@ -3,22 +3,7 @@ version: "3"
 services:
   app:
     volumes: &appvolumes
-      ## Host mounts with performance penalty, only put what is necessary here
-      - ${GITPOD_REPO_ROOT}/app/code:/var/www/html/app/code:cached
-      - ${GITPOD_REPO_ROOT}/app/design:/var/www/html/app/design:cached
-      - ${GITPOD_REPO_ROOT}/app/etc:/var/www/html/app/etc:cached
-      - ${GITPOD_REPO_ROOT}/composer.json:/var/www/html/composer.json:cached
-      - ${GITPOD_REPO_ROOT}/composer.lock:/var/www/html/composer.lock:cached
-      - ${GITPOD_REPO_ROOT}/grunt-config.json.sample:/var/www/html/grunt-config.json:cached
-      - ${GITPOD_REPO_ROOT}/Gruntfile.js.sample:/var/www/html/Gruntfile.js:cached
-      - ${GITPOD_REPO_ROOT}/dev/tools/grunt/configs:/var/www/html/dev/tools/grunt/configs:cached
-      - ${GITPOD_REPO_ROOT}/nginx.conf.sample:/var/www/html/nginx.conf:cached
-      - ${GITPOD_REPO_ROOT}/package.json.sample:/var/www/html/package.json:cached
-      #- ./src/auth.json:/var/www/html/auth.json:cached
-      #- ./src/m2-hotfixes:/var/www/html/m2-hotfixes:cached
-      #- ./src/patches:/var/www/html/patches:cached
-      #- ./src/var/log:/var/www/html/var/log:cached
-      #- ./src/var/report:/var/www/html/var/report:cached
+      - ${GITPOD_REPO_ROOT}:/var/www/html:cached
 
   phpfpm:
     volumes: *appvolumes
