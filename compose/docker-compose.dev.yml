@@ -25,7 +25,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: ${COMPOSE_PROJECT_NAME}phpmyadmin
+    container_name: phpmyadmin
     env_file: env/db.env
     ports:
       - "8080:80"

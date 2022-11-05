@@ -14,32 +14,32 @@ version: "3"
 
 services:
   app:
-    image: markoshust/magento-nginx:1.18-8
-    container_name: ${COMPOSE_PROJECT_NAME}nginx
+    image: nginx
+    container_name: nginx
     ports:
-      - "80:8000"
-      - "443:8443"
+      - "443:80"
+    volumes:
+      - /workspace/rde/images/nginx/1.18/conf/default.conf:/etc/nginx/conf.d/default.conf
+      - /workspace/rde/images/nginx/1.18/conf/nginx.conf:/etc/nginx/nginx.conf
+      - appdata:/var/www/html
+      - sockdata:/sock
+
+  phpfpm:
+    image: markoshust/magento-php:8.1-fpm-1
+    container_name: phpfpm
     volumes: &appvolumes
       - ~/.composer:/var/www/.composer:cached
       - ~/.ssh/id_rsa:/var/www/.ssh/id_rsa:cached
       - ~/.ssh/known_hosts:/var/www/.ssh/known_hosts:cached
       - appdata:/var/www/html
       - sockdata:/sock
-      - ssldata:/etc/nginx/certs
-    #extra_hosts: &appextrahosts
-      ## Selenium support, replace "magento.test" with URL of your site
-      #- "magento.test:172.17.0.1"
-
-  phpfpm:
-    image: markoshust/magento-php:8.1-fpm-1
-    container_name: ${COMPOSE_PROJECT_NAME}phpfpm
-    volumes: *appvolumes
+      #- ssldata:/etc/nginx/certs
     env_file: env/phpfpm.env
     #extra_hosts: *appextrahosts
 
   db:
     image: mariadb:10.4
-    container_name: ${COMPOSE_PROJECT_NAME}db
+    container_name: db
     command:
       --max_allowed_packet=64M
       --optimizer_use_condition_selectivity=1
@@ -52,13 +52,13 @@ services:
 
   redis:
     image: redis:6.2-alpine
-    container_name: ${COMPOSE_PROJECT_NAME}redis
+    container_name: redis
     ports:
       - "6379:6379"
 
   elasticsearch:
     image: markoshust/magento-elasticsearch:7.16-0
-    container_name: ${COMPOSE_PROJECT_NAME}elasticsearch
+    container_name: elasticsearch
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -73,7 +73,7 @@ services:
 
   rabbitmq:
     image: markoshust/magento-rabbitmq:3.9-0
-    container_name: ${COMPOSE_PROJECT_NAME}rabbitmq
+    container_name: rabbitmq
     ports:
       - "15672:15672"
       - "5672:5672"
@@ -83,7 +83,7 @@ services:
 
   mailcatcher:
     image: sj26/mailcatcher
-    container_name: ${COMPOSE_PROJECT_NAME}mailcatcher
+    container_name: mailcatcher
     ports:
       - "1080:1080"
 
