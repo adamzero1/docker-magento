@@ -1,2 +1,3 @@
 #!/bin/bash
-bin/docker-compose stop "$@"
+SCRIPT_DIR=$(dirname -- "$0")
+${SCRIPT_DIR}/docker-compose stop "$@"
