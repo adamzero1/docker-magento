@@ -4,16 +4,16 @@ services:
   app:
     volumes: &appvolumes
       ## Host mounts with performance penalty, only put what is necessary here
-      - ./src/app/code:/var/www/html/app/code:cached
-      - ./src/app/design:/var/www/html/app/design:cached
-      - ./src/app/etc:/var/www/html/app/etc:cached
-      - ./src/composer.json:/var/www/html/composer.json:cached
-      - ./src/composer.lock:/var/www/html/composer.lock:cached
-      - ./src/grunt-config.json.sample:/var/www/html/grunt-config.json:cached
-      - ./src/Gruntfile.js.sample:/var/www/html/Gruntfile.js:cached
-      - ./src/dev/tools/grunt/configs:/var/www/html/dev/tools/grunt/configs:cached
-      - ./src/nginx.conf.sample:/var/www/html/nginx.conf:cached
-      - ./src/package.json.sample:/var/www/html/package.json:cached
+      - ${GITPOD_REPO_ROOT}/app/code:/var/www/html/app/code:cached
+      - ${GITPOD_REPO_ROOT}/app/design:/var/www/html/app/design:cached
+      - ${GITPOD_REPO_ROOT}/app/etc:/var/www/html/app/etc:cached
+      - ${GITPOD_REPO_ROOT}/composer.json:/var/www/html/composer.json:cached
+      - ${GITPOD_REPO_ROOT}/composer.lock:/var/www/html/composer.lock:cached
+      - ${GITPOD_REPO_ROOT}/grunt-config.json.sample:/var/www/html/grunt-config.json:cached
+      - ${GITPOD_REPO_ROOT}/Gruntfile.js.sample:/var/www/html/Gruntfile.js:cached
+      - ${GITPOD_REPO_ROOT}/dev/tools/grunt/configs:/var/www/html/dev/tools/grunt/configs:cached
+      - ${GITPOD_REPO_ROOT}/nginx.conf.sample:/var/www/html/nginx.conf:cached
+      - ${GITPOD_REPO_ROOT}/package.json.sample:/var/www/html/package.json:cached
       #- ./src/auth.json:/var/www/html/auth.json:cached
       #- ./src/m2-hotfixes:/var/www/html/m2-hotfixes:cached
       #- ./src/patches:/var/www/html/patches:cached
@@ -25,6 +25,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    container_name: ${COMPOSE_PROJECT_NAME}phpmyadmin
     env_file: env/db.env
     ports:
       - "8080:80"

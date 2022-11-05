@@ -1,3 +1,4 @@
 #!/bin/bash
 [ -z "$1" ] && echo "Please specify a CLI command (ex. ls)" && exit
-bin/docker-compose exec phpfpm "$@"
+SCRIPT_DIR=$(dirname -- "$0")
+${SCRIPT_DIR}/docker-compose exec phpfpm "$@"

@@ -15,6 +15,7 @@ version: "3"
 services:
   app:
     image: markoshust/magento-nginx:1.18-8
+    container_name: ${COMPOSE_PROJECT_NAME}nginx
     ports:
       - "80:8000"
       - "443:8443"
@@ -31,12 +32,14 @@ services:
 
   phpfpm:
     image: markoshust/magento-php:8.1-fpm-1
+    container_name: ${COMPOSE_PROJECT_NAME}phpfpm
     volumes: *appvolumes
     env_file: env/phpfpm.env
     #extra_hosts: *appextrahosts
 
   db:
     image: mariadb:10.4
+    container_name: ${COMPOSE_PROJECT_NAME}db
     command:
       --max_allowed_packet=64M
       --optimizer_use_condition_selectivity=1
@@ -49,11 +52,13 @@ services:
 
   redis:
     image: redis:6.2-alpine
+    container_name: ${COMPOSE_PROJECT_NAME}redis
     ports:
       - "6379:6379"
 
   elasticsearch:
     image: markoshust/magento-elasticsearch:7.16-0
+    container_name: ${COMPOSE_PROJECT_NAME}elasticsearch
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -68,6 +73,7 @@ services:
 
   rabbitmq:
     image: markoshust/magento-rabbitmq:3.9-0
+    container_name: ${COMPOSE_PROJECT_NAME}rabbitmq
     ports:
       - "15672:15672"
       - "5672:5672"
@@ -77,6 +83,7 @@ services:
 
   mailcatcher:
     image: sj26/mailcatcher
+    container_name: ${COMPOSE_PROJECT_NAME}mailcatcher
     ports:
       - "1080:1080"
 
